@@ -6,11 +6,18 @@
       CHOOSE TYPE
     </div>
 
+    <div id="quantity-container">
+      <div id="quantity-images">
+        <Length />
+      </div>     
+    </div>
+
   </div>
 </template>
 
 <script>
 import Header from "./Header.vue";
+import Length from "./Length.vue";
 
 export default {
   name: "Home",
@@ -20,6 +27,7 @@ export default {
   },
   components: {
     Header,
+    Length,
   },
 };
 </script>
