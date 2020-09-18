@@ -2,6 +2,10 @@
   <div id="home">
     <Header />
 
+    <div id="home-text">
+      CHOOSE TYPE
+    </div>
+
   </div>
 </template>
 
