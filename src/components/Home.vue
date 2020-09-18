@@ -10,6 +10,7 @@
       <div id="quantity-images">
         <Length />
         <Temperature />
+        <Volume />
       </div>     
     </div>
 
@@ -20,6 +21,7 @@
 import Header from "./Header.vue";
 import Length from "./Length.vue";
 import Temperature from "./Temperature.vue";
+import Volume from "./Volume.vue";
 
 export default {
   name: "Home",
@@ -31,6 +33,7 @@ export default {
     Header,
     Length,
     Temperature,
+    Volume,
   },
 };
 </script>
