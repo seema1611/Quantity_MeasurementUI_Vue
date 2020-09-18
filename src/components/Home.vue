@@ -9,6 +9,7 @@
     <div id="quantity-container">
       <div id="quantity-images">
         <Length />
+        <Temperature />
       </div>     
     </div>
 
@@ -18,6 +19,7 @@
 <script>
 import Header from "./Header.vue";
 import Length from "./Length.vue";
+import Temperature from "./Temperature.vue";
 
 export default {
   name: "Home",
@@ -28,6 +30,7 @@ export default {
   components: {
     Header,
     Length,
+    Temperature,
   },
 };
 </script>
