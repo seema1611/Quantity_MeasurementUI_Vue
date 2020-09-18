@@ -14,6 +14,10 @@
       </div>     
     </div>
 
+    <div id="conversion-container">
+      <Conversion />
+    </div>
+
   </div>
 </template>
 
@@ -22,6 +26,7 @@ import Header from "./Header.vue";
 import Length from "./Length.vue";
 import Temperature from "./Temperature.vue";
 import Volume from "./Volume.vue";
+import Conversion from "./Conversion.vue";
 
 export default {
   name: "Home",
@@ -34,6 +39,7 @@ export default {
     Length,
     Temperature,
     Volume,
+    Conversion,
   },
 };
 </script>
