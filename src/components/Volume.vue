@@ -83,4 +83,17 @@ $volume-color: #7224ff;
   background-color: #e8ddff;
   box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.3);
 }
+
+@media screen and (max-width: 780px) {
+.md-card {
+  width: 100%;
+  margin-bottom: 20%;
+}
+.img-text {
+  font-size: 20px;
+  line-height: 19px;
+  margin-top: 2vh;
+}
+}
+
 </style>

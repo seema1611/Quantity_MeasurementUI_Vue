@@ -35,7 +35,7 @@ export default {
       ];
       this.fromSelected = "Feet";
       this.toSelected = "Inch";
-      this.fromValue = 1;
+      this.fromValue = 0;
       this.fromValueChanged();
     });
     EventBus.$on("temperatureClicked", () => {
@@ -49,7 +49,7 @@ export default {
       ];
       this.fromSelected = "Celsius";
       this.toSelected = "Fahrenheit";
-      this.fromValue = 1;
+      this.fromValue = 0;
       this.fromValueChanged();
     });
     EventBus.$on("volumeClicked", () => {
@@ -63,7 +63,7 @@ export default {
       ];
       this.fromSelected = "Litre";
       this.toSelected = "Millilitre";
-      this.fromValue = 1;
+      this.fromValue = 0;
       this.fromValueChanged();
     });
   },
@@ -88,10 +88,6 @@ export default {
   },
   methods: {
     fromValueChanged: function () {
-      let quantity = {
-        value: this.fromValue,
-        operationType: this.fromSelected + "To" + this.toSelected,
-      };
     },
   },
 };
@@ -140,4 +136,35 @@ input::-webkit-inner-spin-button {
   border: solid 1px rgba($color: #000000, $alpha: 0.2);
   border-top: none;
 }
+@media screen and (max-width: 780px) {
+  #from-to {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.from-to-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.from-to-input {
+  width: 45vw;
+  font-size: 20px;
+}
+
+.select-unit {
+  width: 45vw;
+  margin-bottom: 25%;
+  font-size: 20px;
+}
+
+.from-to-text {
+  font-size: 20px;
+  margin-bottom: 8%;
+}
+
+}
+
 </style>

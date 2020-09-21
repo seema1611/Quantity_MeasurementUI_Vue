@@ -8,10 +8,7 @@
         History
       </div>
     </div>
-
-    <div id="header-bottom">
-      Welcome To Quantity Measurement  
-    </div>
+    <div id="header-bottom">{{ headerText }}</div>
   </div>
 </template>
 
@@ -20,12 +17,13 @@ export default {
   name: "Header",
   data() {
     return {
+      headerText: "Welcome To Quantity Measurement",
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #link-btn {
   color: black;
   text-decoration: none;
@@ -65,9 +63,20 @@ export default {
   opacity: 1;
 }
 
-@media only screen and (max-width: 360px) {
+@media screen and (max-width: 780px) {
   #quanment {
-    font-size: 40px;
+    font-size: 20px;
   }
+
+  #header-top {
+    width: 200%
 }
+
+  #header-bottom {
+  width: 200%;
+}
+}
+
+
 </style>
+

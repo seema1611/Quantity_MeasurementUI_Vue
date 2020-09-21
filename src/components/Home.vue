@@ -3,6 +3,7 @@
     <Header />
 
     <div id="home-text">
+      <b>{{ hometext}}</b>
       CHOOSE TYPE
     </div>
 
@@ -32,6 +33,7 @@ export default {
   name: "Home",
   data() {
     return {
+      homeText: "CHOOSE TYPE",
     };
   },
   components: {
@@ -77,4 +79,34 @@ export default {
   left: 28vw;
   margin-top: 05vh;
 }
+
+@media screen and (max-width: 780px) {
+#home {
+  width: 50%;
+  height: auto;
+ }
+
+ #home-text {
+  font-size: 20px;
+}
+
+#home-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#quantity-images {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#conversion-container {
+  width: 35vw;
+  display:flex;
+  display: flex;
+  flex-direction: row;
+}
+}
+
 </style>
