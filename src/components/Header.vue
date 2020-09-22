@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <div id="header-top">
+    <div id="header-history-quanment">
       <div id="quanment">
         <b>Quanment</b>
       </div>
@@ -8,8 +8,10 @@
         History
       </div>
     </div>
-    <div id="header-bottom">{{ headerText }}</div>
+
+    <div id="header-welcome">Welcome To Quantity Measurement</div>
   </div>
+  
 </template>
 
 <script>
@@ -17,33 +19,30 @@ export default {
   name: "Header",
   data() {
     return {
-      headerText: "Welcome To Quantity Measurement",
     };
   },
 };
 </script>
 
 <style lang="scss">
-#link-btn {
-  color: black;
-  text-decoration: none;
-}
 #header {
   font-family: "Poppins", sans-serif;
   background-color: white;
 }
-#header-top {
+#header-history-quanment {
+  font-size: 21px;
+  color: black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: black;
-  font-size: 21px;
 }
+
 #quanment {
   padding-left: 15vw;
   padding-top: 2vh;
   line-height: 31px;
 }
+
 #history {
   padding-right: 15vw;
   padding-top: 3vh;
@@ -51,7 +50,8 @@ export default {
   line-height: 18px;
   padding-bottom: 3vh;
 }
-#header-bottom {
+
+#header-welcome {
   color: white;
   background-color: #446dff;
   width: 100%;
