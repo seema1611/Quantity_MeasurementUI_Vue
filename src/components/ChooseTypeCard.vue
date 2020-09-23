@@ -1,39 +1,51 @@
 <template>
   <div id="quantity-container">
     <div id="quantity">
-      <div class="cards">
-        <md-content @click = "SelectedQuantity('Length')" >
+        <md-content @click = "SelectedQuantity(mainUnit[0])" class="length_quantity" >
         <img src="../assets/scale.svg" alt="Length" />
         <p>Length</p>
         </md-content>
 
-        <md-content @click = "SelectedQuantity('Temperature')">
+        <md-content @click = "SelectedQuantity(mainUnit[3])" class="temperature_quantity" >
         <img src="../assets/hot.svg" alt="Temperature" />
         <p>Tempetaure</p>
         </md-content>
 
-        <md-content @click = "SelectedQuantity('Volume')">
+        <md-content @click = "SelectedQuantity(mainUnit[1])" class="volume_quantity" >
         <img src="../assets/beaker.svg" alt="Volume" />
         <p>Volume</p>
         </md-content>
-
-      </div>
     </div>       
   </div>
 </template>
 
 <script>
 import {bus} from '../main'
+import services from '../services/QuantityMeasurementService'
 export default {
   name: 'ChooseTypeCard',
   data() {
     return {
+      mainUnit:[],
     };
   },
   methods: {
     SelectedQuantity : function(clickedQuantity) {
       bus.$emit('getValue', clickedQuantity)
-    }
+    },
+    getMainUnits: function () {
+      services.getUnits().then((response) => {
+        this.mainUnit = response.data.data;
+        console.log(this.mainUnit);
+      })
+      .catch((error) =>{
+        console.log(error);
+      });
+    },
+  },
+
+  created() {
+    this.getMainUnits();
   }
 };
 </script>
@@ -74,21 +86,24 @@ export default {
   border-radius: 7px;
   filter: grayscale();
 }
-.md-content:nth-child(1):hover {
+
+.length_quantity:hover {
   background-color: #edfdf9;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #0ec098;
   color: #0ec098;
   filter: none !important;
 }
-.md-content:nth-child(2):hover {
+
+.temperature_quantity:hover {
   background-color: #ffeef0;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #fd5160;
   color: #fd5160;
   filter: none !important;
 }
-.md-content:nth-child(3):hover {
+
+.volume:hover {
   background-color: #e8ddff;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #7224ff;

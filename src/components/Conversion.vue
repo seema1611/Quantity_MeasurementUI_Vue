@@ -3,17 +3,30 @@
 
     <div class="from-content">
       <div class="from-to-text">FROM</div>
-      <input type="number" class="from-to-input" v-model="fromValue">
-      <select class="select-unit">
-        <option v-for= "value in quantityDropdown" :key= "value"> {{ value }}</option>
+      <input 
+        @input="changedSecondUnit()" 
+        class="from-to-input" 
+        type="number" 
+        v-model="firstTextValue">      
+      <select class="select-unit" @change="changedFirstUnit()" v-model="selectedFirstUnit">
+        <option v-for= "subUnit in subUnits"
+         v-bind:key= "subUnit"
+         > {{ subUnit }}</option>
       </select>
     </div>
 
     <div class="to-content">
       <div class="from-to-text">TO</div>
-      <input type="number" class="from-to-input" v-model="toValue">
-      <select class="select-unit">
-        <option v-for="value in quantityDropdown" :key= "value"> {{ value }}</option>
+      <input 
+        @input="changedFirstUnit()" 
+        type="number" 
+        class="from-to-input" 
+        v-model="secondTextValue">      
+      <select class="select-unit" @change="changedSecondUnit()" 
+        v-model="selectedSecondUnit">
+        <option v-for= "subUnit in subUnits"
+         v-bind:key= "subUnit"
+         > {{ subUnit }}</option>
       </select>
     </div>
 
@@ -22,40 +35,79 @@
 
 <script>
 import {bus} from '../main' 
+import services from '../services/QuantityMeasurementService'
 export default { 
     name:'Conversion',
-    data(){ 
-      return{
-      fromValue:"1",
-      toValue:"1",
-      quantityDropdown:[],
-      Length:['Feet','Inch','Yard'],
-      Temperature:['Kelvin','Fahrenheit'],
-      Volume:['Liter','Mililiter'],
-      }     
-    },
-    created(){
-      bus.$on('getValue',(data)=>{        
-        this.ChangeDropdown(data);
-      })
+    data : () => ({
+      firstTextValue: "1",
+      secondTextValue : "",
+      selectedMainUnit : "",
+      
+      selectedFirstUnit: null,
+      selectedSecondUnit: null,
+      subUnits:[],
+      }),
+
+    methods: {
+      updateSubUnits : function (selectedMainUnit) {
+      services
+        .getSubUnits(selectedMainUnit)
+        .then((response) => {
+          this.subUnits = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
-  methods:{
-    ChangeDropdown:function( value){
-      alert(value)
-      switch(value) {
-        case 'Length':
-         this.quantityDropdown=this.Length;
-        break; 
-        case 'Temperature':
-          this.quantityDropdown=this.Temperature;
-        break;
-        case 'Volume':
-          this.quantityDropdown=this.Volume;
-        break;
-     }
-    }
-  }
+    changedFirstUnit:  function () {
+     services
+        .getConvertedValue(
+          this.secondTextValue,
+          this.selectedSecondUnit,
+          this.selectedFirstUnit
+        )
+        .then((response) => {
+          this.firstTextValue = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    changedSecondUnit:  function () {
+      services
+        .getConvertedValue(
+          this.firstTextValue,
+          this.selectedFirstUnit,
+          this.selectedSecondUnit
+        )
+        .then((response) => {
+          this.secondTextValue = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+
+  watch: {
+    subUnits: function () {
+      this.selectedFirstUnit = this.subUnits[0];
+      this.selectedSecondUnit = this.subUnits[1];
+      this.firstTextValue='1';
+      this.changedSecondUnit();
+    },
+  },
+
+    mounted (){
+    bus.$on('getValue',(unit)=>{  
+        this.selectedMainUnit = unit;
+        console.log(this.selectedMainUnit);
+        this.updateSubUnits(this.selectedMainUnit);
+      });
+      this.selectedFirstUnit = this.subUnits[0];
+      this.selectedSecondUnit = this.subUnits[1];
+    },
 }
 </script>
 
