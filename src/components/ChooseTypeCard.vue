@@ -115,9 +115,12 @@ p {
   margin: 0 32px;
   font-family: "Montserrat", sans-serif;
   text-transform: capitalize;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .md-content > p {
   margin-top: 24px;
+  font-family: "Montserrat", sans-serif;
 }
 </style>
