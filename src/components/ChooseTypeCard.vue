@@ -1,5 +1,7 @@
 <template>
   <div id="quantity-container">
+    <div class="type">CHOOSE TYPE</div>
+
     <div id="quantity">
         <md-content @click = "SelectedQuantity(mainUnit[0])" class="length_quantity" >
         <img src="../assets/scale.svg" alt="Length" />
@@ -15,7 +17,7 @@
         <img src="../assets/beaker.svg" alt="Volume" />
         <p>Volume</p>
         </md-content>
-    </div>       
+    </div>
   </div>
 </template>
 
@@ -57,7 +59,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 16px;  
-  margin-top: 4vw;
+  margin-top: 1vw;
 }
 
 #quantity {
@@ -103,7 +105,7 @@ export default {
   filter: none !important;
 }
 
-.volume:hover {
+.volume_quantity:hover {
   background-color: #e8ddff;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #7224ff;
@@ -122,5 +124,19 @@ p {
 .md-content > p {
   margin-top: 24px;
   font-family: "Montserrat", sans-serif;
+}
+
+.type {
+  width: 100%;
+  display: flex;
+  text-align: start;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  padding-left: 21%;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.type + div {
+  padding: 10px;
 }
 </style>
