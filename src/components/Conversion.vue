@@ -1,37 +1,63 @@
 <template>
-  <div id="conversion-container">
+  <div class="conversion-container">
 
-    <div class="from-content">
-      <div class="from-to-text">FROM</div>
-      <input 
-        @input="changedSecondUnit()" 
-        class="from-to-input" 
-        type="number" 
-        v-model="firstTextValue">      
-      <select class="select-unit" @change="changedFirstUnit()" v-model="selectedFirstUnit">
-        <option v-for= "subUnit in subUnits"
-         v-bind:key= "subUnit"
-         > {{ subUnit }}</option>
-      </select>
-    </div>
+    <div class="values-units-container">
 
-    <div class="to-content">
-      <div class="from-to-text">TO</div>
-      <input 
-        @input="changedFirstUnit()" 
-        type="number" 
-        class="from-to-input" 
-        v-model="secondTextValue">      
-      <select class="select-unit" @change="changedSecondUnit()" 
-        v-model="selectedSecondUnit">
-        <option v-for= "subUnit in subUnits"
-         v-bind:key= "subUnit"
-         > {{ subUnit }}</option>
-      </select>
+      <div class="input-container">
+        
+        <div class="values-units-container">
+          <div class="from-to-text">From</div>
+          <div class="from-to-box">
+            <input
+              @input="updateSecondUnit()"
+              class="textbox"
+              type="text"
+              v-model="formValue"
+            />
+            <select  class="selectbox" 
+              @change="updateFirstUnit()"
+               v-model="selectedFirstUnit">
+              <option
+                class="option-box"
+                v-for="subUnit in subUnitsArray"
+                v-bind:key="subUnit"
+              >{{subUnit}}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="values-units-container">
+          <div class="from-to-text">To</div>
+          <div class="from-to-box">
+            <input
+              @input="updateFirstUnit()"
+              class="textbox"
+              type="text"
+              v-model="toValue"
+            />
+            <select 
+              class="selectbox" 
+              @change="updateSecondUnit()" 
+              v-model="selectedSecondUnit">
+              <option
+                class="option-box"
+                v-for="subUnit in subUnitsArray"
+                v-bind:key="subUnit">
+                {{subUnit}}
+                </option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+      
     </div>
 
   </div>
 </template>
+
 
 <script>
 import {bus} from '../main' 
@@ -39,13 +65,13 @@ import services from '../services/QuantityMeasurementService'
 export default { 
     name:'Conversion',
     data : () => ({
-      firstTextValue: "1",
-      secondTextValue : "",
       selectedMainUnit : "",
+      formValue: "1",
+      toValue : "",
       
       selectedFirstUnit: null,
       selectedSecondUnit: null,
-      subUnits:[],
+      subUnitsArray:[],
       }),
 
     methods: {
@@ -53,36 +79,37 @@ export default {
       services
         .getSubUnits(selectedMainUnit)
         .then((response) => {
-          this.subUnits = response.data.data;
+          this.subUnitsArray = response.data.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    changedFirstUnit:  function () {
+    updateFirstUnit:  function () {
      services
         .getConvertedValue(
-          this.secondTextValue,
+          this.toValue,
           this.selectedSecondUnit,
           this.selectedFirstUnit
         )
         .then((response) => {
-          this.firstTextValue = response.data.data;
+          this.formValue = response.data.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    changedSecondUnit:  function () {
+
+    updateSecondUnit:  function () {
       services
         .getConvertedValue(
-          this.firstTextValue,
+          this.formValue,
           this.selectedFirstUnit,
           this.selectedSecondUnit
         )
         .then((response) => {
-          this.secondTextValue = response.data.data;
+          this.toValue = response.data.data;
         })
         .catch((error) => {
           console.log(error);
@@ -91,11 +118,11 @@ export default {
   },
 
   watch: {
-    subUnits: function () {
-      this.selectedFirstUnit = this.subUnits[0];
-      this.selectedSecondUnit = this.subUnits[1];
-      this.firstTextValue='1';
-      this.changedSecondUnit();
+    subUnitsArray: function () {
+      this.selectedFirstUnit = this.subUnitsArray[0];
+      this.selectedSecondUnit = this.subUnitsArray[1];
+      this.formValue='1';
+      this.updateSecondUnit();
     },
   },
 
@@ -105,99 +132,83 @@ export default {
         console.log(this.selectedMainUnit);
         this.updateSubUnits(this.selectedMainUnit);
       });
-      this.selectedFirstUnit = this.subUnits[0];
-      this.selectedSecondUnit = this.subUnits[1];
+      this.selectedFirstUnit = this.subUnitsArray[0];
+      this.selectedSecondUnit = this.subUnitsArray[1];
     },
 }
 </script>
 
-<style lang="scss" scoped>
-#conversion-container {
+<style scoped>
+.conversion-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 16px;
 }
 
-.from-content {
-  display: flex;
+.values-units-container {
   flex-direction: column;
-  margin-left: 20%;
+    max-width: -webkit-fill-available;
 }
 
-.to-content {
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.from-to-box {
   display: flex;
   flex-direction: column;
-  margin-right: 20%;
+  margin: 5px 25px;
 }
 
 .from-to-text {
-  font-size: 12px;
-  line-height: 15px;
+  top: 397px;
+  left: 520px;
+  width: 38px;
+  height: 15px;
   text-align: left;
+  margin-left: 10%;
   font-family: "Montserrat", sans-serif;
+  letter-spacing: 0px;
+  color: #000000;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
-.from-to-input {
-  width: 28vw;
-  font-size: 25px;
-  line-height: 40px;
+.textbox {
+  height: 62px;
+  max-width: 350px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #e5dafc;
+  border-radius: 1px;
+  opacity: 1;
+  padding: 18px 27px;
   text-align: left;
-  border: none;
-  outline: none;
-  padding: 1vh;
-  padding-left: 10%;
-  border: solid 1px rgba($color: #000000, $alpha: 0.2);
+  font: normal normal bold 31px/40px Roboto;
+  letter-spacing: 0px;
+  color: #000000;
+}
+.selectbox {
+  max-width: 350px;
+  height: 48px;
+  border: 1px solid #e7dcfe;
+  border-radius: 3px;
+  padding: 15px 27px;
+  font: normal normal normal 15px/19px Montserrat;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-.select-unit {
-  width: 28vw;
-  height: 7vh;
-  font-size: 12px;
-  line-height: 15px;
-  font-family: "Montserrat", sans-serif;
-  outline: none;
-  padding-left: 10%;
-  border: solid 1px rgba($color: #000000, $alpha: 0.2);
-  border-top: none;
+select:focus {
+ outline: none ;
 }
 
-@media screen and (max-width: 780px) {
-  #conversion-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.from-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-right: 5%;
-}
-
-.to-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-left: 5%;
-}
-
-.from-to-input {
-  width: 45vw;
-  font-size: 20px;
-}
-
-.select-unit {
-  width: 45vw;
-  margin-bottom: 25%;
-  font-size: 20px;
-}
-
-.from-to-text {
-  font-size: 20px;
-  margin-bottom: 8%;
-}
-
-}
+</style>
 
 </style>

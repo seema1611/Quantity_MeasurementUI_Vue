@@ -17,7 +17,6 @@ export default {
             {
                 method: 'get',
                 url: `${baseUrl}/${subUnitURL}`,
-
             }
         )
     },
