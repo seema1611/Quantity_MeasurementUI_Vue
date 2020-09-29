@@ -210,5 +210,3 @@ select:focus {
 }
 
 </style>
-
-</style>
