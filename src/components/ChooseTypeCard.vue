@@ -2,19 +2,19 @@
   <div id="quantity-container">
     <div class="type">CHOOSE TYPE</div>
 
-    <div id="quantity">
-        <md-content @click = "SelectedQuantity(mainUnit[0])" class="length_quantity" >
-        <img src="../assets/scale.svg" alt="Length" />
+    <div id="quantity">    
+        <md-content id= "LENGTH" v-on:click.native = "SelectedQuantity(mainUnit[0], '#edfdf9', ' #0ec098' )" >
+        <img v-bind:src="require('../assets/' +scalesrc)" alt="Length" />
         <p>Length</p>
         </md-content>
 
-        <md-content @click = "SelectedQuantity(mainUnit[3])" class="temperature_quantity" >
-        <img src="../assets/hot.svg" alt="Temperature" />
+        <md-content id= "TEMPERATURE" v-on:click.native = "SelectedQuantity(mainUnit[3], '#ffeef0', '#fd5160')" >
+        <img v-bind:src="require('../assets/' +tempsrc)" alt="Temperature" />
         <p>Tempetaure</p>
         </md-content>
 
-        <md-content @click = "SelectedQuantity(mainUnit[1])" class="volume_quantity" >
-        <img src="../assets/beaker.svg" alt="Volume" />
+        <md-content id= "VOLUME" v-on:click.native = "SelectedQuantity(mainUnit[1], '#e8ddff', '#7224ff')" class="VOLUME" >
+        <img v-bind:src="require('../assets/' +volumesrc)" alt="Volume" />
         <p>Volume</p>
         </md-content>
     </div>
@@ -28,11 +28,26 @@ export default {
   name: 'ChooseTypeCard',
   data() {
     return {
+      scalesrc: "scalefilled.png",
+      tempsrc: "hotfilled.png",
+      volumesrc: "beakerfilled.png",
       mainUnit:[],
+      selected: "",
     };
   },
   methods: {
-    SelectedQuantity : function(clickedQuantity) {
+    SelectedQuantity : function(clickedQuantity, background, border) {
+      var styleproperty = document.getElementById(clickedQuantity).style;
+      if(this.selected.length != 0) {
+        document.getElementById(this.selected).setAttribute("style", "");
+      }
+      styleproperty.filter = "grayscale(0%)";
+      styleproperty.opacity = "1";
+      styleproperty.border = "1px solid " + border;
+      styleproperty.color = border;
+      styleproperty.backgroundColor = background;
+      this.selected = clickedQuantity;
+      console.log(this.selected);
       bus.$emit('getValue', clickedQuantity)
     },
     getMainUnits: function () {
@@ -89,7 +104,7 @@ export default {
   filter: grayscale();
 }
 
-.length_quantity:hover {
+#LENGTH:hover {
   background-color: #edfdf9;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #0ec098;
@@ -97,15 +112,15 @@ export default {
   filter: none !important;
 }
 
-.temperature_quantity:hover {
-  background-color: #ffeef0;
+#TEMPERATURE:hover {
+    background-color: #ffeef0;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #fd5160;
   color: #fd5160;
   filter: none !important;
 }
 
-.volume_quantity:hover {
+#VOLUME:hover {
   background-color: #e8ddff;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #7224ff;

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Home/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -8,12 +8,6 @@
 import Home from './components/Home.vue'
 export default {
   name: 'app',
-  data () {
-    return {
-    }
-  }
-
-  ,components:{Home}
 }
 </script>
 

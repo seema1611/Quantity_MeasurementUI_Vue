@@ -171,7 +171,7 @@ export default {
   width: 38px;
   height: 15px;
   text-align: left;
-  margin-left: 10%;
+  margin-left: 8%;
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0px;
   color: #000000;
